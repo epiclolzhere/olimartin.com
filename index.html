@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Oli Martin</title>
+    <meta name="description" content="Personal site" />
+
+    <style>
+      :root {
+        --bg: #ffffff;
+        --fg: #111111;
+        --muted: #666666;
+        --link: #111111;
+        --card: #f5f5f5;
+        --border: rgba(0, 0, 0, 0.08);
+        --strike: #dc2626;
+
+        --max: 980px;
+        --pad: clamp(18px, 4vw, 44px);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0b0b0b;
+          --fg: #f1f1f1;
+          --muted: #a8a8a8;
+          --link: #f1f1f1;
+          --card: #121212;
+          --border: rgba(255, 255, 255, 0.12);
+          --strike: #ef4444;
+        }
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.35;
+      }
+
+      a { color: var(--link); text-underline-offset: 0.18em; }
+      a:hover { opacity: 0.85; }
+
+      .container {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: var(--pad);
+      }
+
+      .hero {
+        padding-top: clamp(6px, 2vw, 18px);
+      }
+
+      .name {
+        margin: 0 0 14px 0;
+        font-size: clamp(44px, 8vw, 92px);
+        font-weight: 750;
+        letter-spacing: -0.04em;
+        line-height: 1.02;
+      }
+
+      .subtitle {
+        display: inline-block;
+        color: var(--muted);
+        font-size: clamp(16px, 1.8vw, 20px);
+        margin-bottom: 18px;
+      }
+
+      .lead {
+        margin: 14px 0 0 0;
+        font-size: clamp(18px, 2.2vw, 24px);
+        font-weight: 450;
+        letter-spacing: -0.01em;
+        line-height: 1.35;
+        max-width: 70ch;
+      }
+
+      /* Typing block */
+      .typewrap {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.08em;
+      }
+
+      #strike {
+        display: inline-block;
+        position: relative;
+        white-space: pre-wrap;
+      }
+
+      /* red strike line */
+      #strike.strike::after {
+        content: "";
+        position: absolute;
+        left: -0.02em;
+        right: -0.02em;
+        top: 52%;
+        height: 0.11em;           /* scales with font size */
+        background: var(--strike);
+        border-radius: 999px;
+        transform: rotate(-2deg);
+        transform-origin: left center;
+      }
+
+      .typed-cursor {
+        display: inline-block;
+        margin-left: 0.08em;
+        transform: translateY(0.02em);
+        animation: blink 1s steps(1, end) infinite;
+        user-select: none;
+      }
+      .typed-cursor::before {
+        content: "|";
+      }
+      @keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+        .typed-cursor {
+        display: inline-block;
+        margin-left: 0.08em;
+        transform: translateY(0.02em);
+        animation: blink 1s steps(1, end) infinite;
+        user-select: none;
+      }
+      .typed-cursor::before {
+        content: "|";
+      }
+      }
+
+      /* Plain sections (wireframe) */
+      .sections {
+        margin-top: 28px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 16px;
+      }
+
+      .section-title {
+        margin: 0 0 10px 0;
+        font-size: 18px;
+        letter-spacing: -0.01em;
+      }
+
+      p { margin: 10px 0; }
+      .muted { color: var(--muted); }
+
+      footer {
+        margin-top: 34px;
+        padding: 18px 0 8px 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="container">
+      <header class="hero">
+        <h1 class="name">
+          <span class="typewrap">
+            <span id="prefix"> </span>
+            <span id="strike"></span>
+            <span class="typed-cursor" aria-hidden="true"></span>
+          </span>
+        </h1>
+
+        <span class="subtitle">Whoops you've found my website!</span>
+
+        <h2 class="lead">
+          I'm 
+        </h2>
+      </header>
+
+      <section class="sections" aria-label="Content">
+        <div class="card" id="about">
+          <h2 class="section-title">About</h2>
+          <p class="muted">2–4 lines about you. Keep it short.</p>
+          <p class="muted">Example: I build digital workplace and automation solutions. Based in London.</p>
+        </div>
+
+        <div class="card" id="projects">
+          <h2 class="section-title">Projects</h2>
+          <p class="muted">• Project A — one line</p>
+          <p class="muted">• Project B — one line</p>
+          <p class="muted">• Project C — one line</p>
+        </div>
+
+        <div class="card" id="contact">
+          <h2 class="section-title">Contact</h2>
+          <p class="muted"><a href="mailto:you@example.com">you@example.com</a></p>
+          <p class="muted"><a href="#">LinkedIn</a> · <a href="#">GitHub</a></p>
+        </div>
+      </section>
+
+      <footer>
+        <p class="muted">© <span id="y"></span> Oli Martin</p>
+      </footer>
+    </main>
+
+    <script>
+      (function () {
+        const y = document.getElementById("y");
+        if (y) y.textContent = String(new Date().getFullYear());
+
+        const prefix = document.getElementById("prefix");
+        const strike = document.getElementById("strike");
+        if (!prefix || !strike) return;
+
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        // Edit these only:
+        const SEQ = [
+          { prefix: "", text: "Hello", strikeAndDelete: true },
+          { prefix: "", text: "Hi", strikeAndDelete: true },
+          { prefix: "", text: "Hey I'm ", strikeAndDelete: false, finalText: "Oli Martin!" }
+        ];
+
+        // Speed tuning
+        const cfg = {
+          typeMin: 55,
+          typeJitter: 70,
+          deleteMin: 30,
+          deleteJitter: 45,
+          afterTypePause: 650,
+          afterStrikePause: 850,
+          afterDeletePause: 300
+        };
+
+        const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+        const rand = (min, jitter) => min + Math.floor(Math.random() * jitter);
+
+        async function typeInto(el, text) {
+          el.textContent = "";
+          for (let i = 1; i <= text.length; i++) {
+            el.textContent = text.slice(0, i);
+            await sleep(rand(cfg.typeMin, cfg.typeJitter));
+          }
+        }
+
+        async function deleteFrom(el, text) {
+          for (let i = text.length; i >= 0; i--) {
+            el.textContent = text.slice(0, i);
+            await sleep(rand(cfg.deleteMin, cfg.deleteJitter));
+          }
+        }
+
+        async function runOnce() {
+          if (reduceMotion) {
+            const last = SEQ[SEQ.length - 1];
+            prefix.textContent = last.prefix || "";
+            strike.classList.remove("strike");
+            strike.textContent = (last.text || "") + (last.finalText || "");
+            return;
+          }
+
+          for (const step of SEQ) {
+            prefix.textContent = step.prefix || "";
+            strike.classList.remove("strike");
+
+            if (step.finalText) {
+              await typeInto(strike, (step.text || "") + step.finalText);
+              // Hold the final line so it can be read, then clear for next loop.
+              await sleep(2400);
+              await deleteFrom(strike, (step.text || "") + step.finalText);
+              strike.classList.remove("strike");
+              await sleep(250);
+              return;
+            }
+
+            await typeInto(strike, step.text || "");
+
+            if (!step.strikeAndDelete) {
+              await sleep(2400);
+              await deleteFrom(strike, step.text || "");
+              await sleep(250);
+              return;
+            }
+
+            await sleep(cfg.afterTypePause);
+            strike.classList.add("strike");
+            await sleep(cfg.afterStrikePause);
+            await deleteFrom(strike, step.text || "");
+            strike.classList.remove("strike");
+            await sleep(cfg.afterDeletePause);
+          }
+        }
+
+        async function loop() {
+          while (true) {
+            await runOnce();
+            // Small pause between full cycles
+            await sleep(900);
+          }
+        }
+
+        loop();
+      })();
+    </script>
+  </body>
+</html>

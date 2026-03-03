@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -7,161 +8,152 @@
     <title>Oli Martin</title>
     <meta name="description" content="Oli Martin Dot Com" />
 
-    <style>
-      :root {
-        --bg: #ffffff;
-        --fg: #111111;
-        --muted: #666666;
-        --link: #111111;
-        --card: #f5f5f5;
-        --border: rgba(0, 0, 0, 0.08);
-        --strike: #dc2626;
+```
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #111111;
+    --muted: #666666;
+    --link: #111111;
+    --card: #f5f5f5;
+    --border: rgba(0, 0, 0, 0.08);
+    --strike: #dc2626;
+    --max: 980px;
+    --pad: clamp(18px, 4vw, 44px);
+  }
 
-        --max: 980px;
-        --pad: clamp(18px, 4vw, 44px);
-      }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b0b0b;
+      --fg: #f1f1f1;
+      --muted: #a8a8a8;
+      --link: #f1f1f1;
+      --card: #121212;
+      --border: rgba(255, 255, 255, 0.12);
+      --strike: #ef4444;
+    }
+  }
 
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #0b0b0b;
-          --fg: #f1f1f1;
-          --muted: #a8a8a8;
-          --link: #f1f1f1;
-          --card: #121212;
-          --border: rgba(255, 255, 255, 0.12);
-          --strike: #ef4444;
-        }
-      }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.35;
+  }
 
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--fg);
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        line-height: 1.35;
-      }
+  a { color: var(--link); text-underline-offset: 0.18em; }
+  a:hover { opacity: 0.85; }
 
-      a { color: var(--link); text-underline-offset: 0.18em; }
-      a:hover { opacity: 0.85; }
+  .container {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: var(--pad);
+  }
 
-      .container {
-        max-width: var(--max);
-        margin: 0 auto;
-        padding: var(--pad);
-      }
+  .hero { padding-top: clamp(6px, 2vw, 18px); }
 
-      .hero {
-        padding-top: clamp(6px, 2vw, 18px);
-      }
+  .name {
+    margin: 0 0 14px 0;
+    font-size: clamp(44px, 8vw, 92px);
+    font-weight: 700; /* FIX: was 750 (non-standard) */
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+  }
 
-      .name {
-        margin: 0 0 14px 0;
-        font-size: clamp(44px, 8vw, 92px);
-        font-weight: 750;
-        letter-spacing: -0.04em;
-        line-height: 1.02;
-      }
+  .subtitle {
+    display: inline-block;
+    color: var(--muted);
+    font-size: clamp(16px, 1.8vw, 20px);
+    margin-bottom: 18px;
+  }
 
-      .subtitle {
-        display: inline-block;
-        color: var(--muted);
-        font-size: clamp(16px, 1.8vw, 20px);
-        margin-bottom: 18px;
-      }
+  /* FIX: was <h2>, changed to <p> to avoid duplicate h2s alongside card titles */
+  .lead {
+    margin: 14px 0 0 0;
+    font-size: clamp(18px, 2.2vw, 24px);
+    font-weight: 500; /* FIX: was 450 (non-standard) */
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    max-width: 70ch;
+  }
 
-      .lead {
-        margin: 14px 0 0 0;
-        font-size: clamp(18px, 2.2vw, 24px);
-        font-weight: 450;
-        letter-spacing: -0.01em;
-        line-height: 1.35;
-        max-width: 70ch;
-      }
+  .typewrap {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.08em;
+  }
 
-      /* Typing block */
-      .typewrap {
-        display: inline-flex;
-        align-items: baseline;
-        gap: 0.08em;
-      }
+  #strike {
+    display: inline-block;
+    position: relative;
+    white-space: pre-wrap;
+  }
 
-      #strike {
-        display: inline-block;
-        position: relative;
-        white-space: pre-wrap;
-      }
+  #strike.strike::after {
+    content: "";
+    position: absolute;
+    left: -0.02em;
+    right: -0.02em;
+    top: 52%;
+    height: 0.11em;
+    background: var(--strike);
+    border-radius: 999px;
+    transform: rotate(-2deg);
+    transform-origin: left center;
+  }
 
-      /* red strike line */
-      #strike.strike::after {
-        content: "";
-        position: absolute;
-        left: -0.02em;
-        right: -0.02em;
-        top: 52%;
-        height: 0.11em;           /* scales with font size */
-        background: var(--strike);
-        border-radius: 999px;
-        transform: rotate(-2deg);
-        transform-origin: left center;
-      }
+  .typed-cursor {
+    display: inline-block;
+    margin-left: 0.08em;
+    transform: translateY(0.02em);
+    animation: blink 1s steps(1, end) infinite;
+    user-select: none;
+  }
+  .typed-cursor::before { content: "|"; }
 
-      .typed-cursor {
-        display: inline-block;
-        margin-left: 0.08em;
-        transform: translateY(0.02em);
-        animation: blink 1s steps(1, end) infinite;
-        user-select: none;
-      }
-      .typed-cursor::before {
-        content: "|";
-      }
-      @keyframes blink { 50% { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) {
-        .typed-cursor {
-        display: inline-block;
-        margin-left: 0.08em;
-        transform: translateY(0.02em);
-        animation: blink 1s steps(1, end) infinite;
-        user-select: none;
-      }
-      .typed-cursor::before {
-        content: "|";
-      }
-      }
+  @keyframes blink { 50% { opacity: 0; } }
 
-      /* Plain sections (wireframe) */
-      .sections {
-        margin-top: 28px;
-        display: grid;
-        gap: 18px;
-      }
+  /* FIX: actually disable the animation instead of re-declaring it */
+  @media (prefers-reduced-motion: reduce) {
+    .typed-cursor { animation: none; }
+  }
 
-      .card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 16px;
-      }
+  .sections {
+    margin-top: 28px;
+    display: grid;
+    gap: 18px;
+  }
 
-      .section-title {
-        margin: 0 0 10px 0;
-        font-size: 18px;
-        letter-spacing: -0.01em;
-      }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+  }
 
-      p { margin: 10px 0; }
-      .muted { color: var(--muted); }
+  /* FIX: changed from h2 to h3 to maintain heading hierarchy */
+  .section-title {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
 
-      footer {
-        margin-top: 34px;
-        padding: 18px 0 8px 0;
-        color: var(--muted);
-        font-size: 14px;
-      }
-    </style>
+  p { margin: 10px 0; }
+  .muted { color: var(--muted); }
+
+  footer {
+    margin-top: 34px;
+    padding: 18px 0 8px 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+</style>
+```
+
   </head>
 
   <body>
@@ -175,137 +167,154 @@
           </span>
         </h1>
 
-        <span class="subtitle">So you've found my website 🤨</span>
+```
+    <span class="subtitle">So you've found my website 🤨</span>
 
-        <h2 class="lead">
-          So I guess you wanna know what this is all about?
-        </h2>
-      </header>
+    <!-- FIX: was <h2>, now <p> to avoid heading hierarchy issues -->
+    <p class="lead">
+      So I guess you wanna know what this is all about?
+    </p>
+  </header>
 
-      <section class="sections" aria-label="Content">
-        <div class="card" id="about">
-          <h2 class="section-title">About Me</h2>
-          <p class="muted">🌍 I live in Devon, South West, United Kingdom</p>
-          <p class="muted">💻 I work in Enterprise IT</p>
-          <p class="muted">📚 Never went to University</p>
-          <p class="muted">🚒 I'm a retained firefighter</p>
-        </div>
+  <section class="sections" aria-label="Content">
+    <div class="card" id="about">
+      <!-- FIX: changed to h3 throughout to sit under the h1 -->
+      <h3 class="section-title">About Me</h3>
+      <p class="muted">🌍 I live in Devon, South West, United Kingdom</p>
+      <p class="muted">💻 I work in Enterprise IT</p>
+      <p class="muted">📚 Never went to University</p>
+      <p class="muted">🚒 I'm a retained firefighter</p>
+    </div>
 
-        <div class="card" id="projects">
-          <h2 class="section-title">Projects</h2>
-          <p class="muted">• Nothing to put here right now.. I have a job, and I love it!</p>
-        </div>
+    <div class="card" id="projects">
+      <h3 class="section-title">Projects</h3>
+      <p class="muted">• Nothing to put here right now.. I have a job, and I love it!</p>
+    </div>
 
-        <div class="card" id="contact">
-          <h2 class="section-title">Contact</h2>
-          <p class="muted"><a href="mailto:spam@olimartin.com">spam@olimartin.com</a></p>
-          <p class="muted"><a href="https://www.linkedin.com/in/olimartin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app">LinkedIn</a>
-        </div>
-      </section>
+    <div class="card" id="contact">
+      <h3 class="section-title">Contact</h3>
+      <p class="muted"><a href="mailto:spam@olimartin.com">spam@olimartin.com</a></p>
+      <p class="muted"><a href="https://www.linkedin.com/in/olimartin">LinkedIn</a></p>
+    </div>
 
-      <footer>
-        <p class="muted">© <span id="y"></span> Oli Martin</p>
-      </footer>
-    </main>
+    <div class="card" id="flightradar">
+      <h3 class="section-title">✈️ Flight Tracking</h3>
+      <p class="muted">I run an ADS-B receiver and feed live flight data to Flightradar24.</p>
+      <a href="https://www.flightradar24.com/account/feed-stats/?id=sixteenmartino" target="_blank" rel="noopener">
+        <img
+          src="https://banners-my.flightradar24.com/sixteenmartino.png"
+          alt="My Flightradar24 feed stats"
+          width="300"
+          height="100"
+          style="max-width: 100%; height: auto; display: block; border-radius: 8px; margin-top: 10px;"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
+        />
+        <span style="display:none; color: var(--muted); font-size: 14px;">View my feed stats on Flightradar24 →</span>
+      </a>
+    </div>
+  </section>
 
-    <script>
-      (function () {
-        const y = document.getElementById("y");
-        if (y) y.textContent = String(new Date().getFullYear());
+  <footer>
+    <p class="muted">© <span id="y"></span> Oli Martin</p>
+  </footer>
+</main>
 
-        const prefix = document.getElementById("prefix");
-        const strike = document.getElementById("strike");
-        if (!prefix || !strike) return;
+<script>
+  (function () {
+    const y = document.getElementById("y");
+    if (y) y.textContent = String(new Date().getFullYear());
 
-        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefix = document.getElementById("prefix");
+    const strike = document.getElementById("strike");
+    if (!prefix || !strike) return;
 
-        // Edit these only:
-        const SEQ = [
-          { prefix: "", text: "Hello", strikeAndDelete: true },
-          { prefix: "", text: "Hi", strikeAndDelete: true },
-          { prefix: "", text: "Hey, I'm ", strikeAndDelete: false, finalText: "Oli Martin!" }
-        ];
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-        // Speed tuning
-        const cfg = {
-          typeMin: 55,
-          typeJitter: 70,
-          deleteMin: 30,
-          deleteJitter: 45,
-          afterTypePause: 650,
-          afterStrikePause: 850,
-          afterDeletePause: 300
-        };
+    const SEQ = [
+      { prefix: "", text: "Hello", strikeAndDelete: true },
+      { prefix: "", text: "Hi", strikeAndDelete: true },
+      { prefix: "", text: "Hey, I'm ", strikeAndDelete: false, finalText: "Oli Martin!" }
+    ];
 
-        const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-        const rand = (min, jitter) => min + Math.floor(Math.random() * jitter);
+    const cfg = {
+      typeMin: 55,
+      typeJitter: 70,
+      deleteMin: 30,
+      deleteJitter: 45,
+      afterTypePause: 650,
+      afterStrikePause: 850,
+      afterDeletePause: 300
+    };
 
-        async function typeInto(el, text) {
-          el.textContent = "";
-          for (let i = 1; i <= text.length; i++) {
-            el.textContent = text.slice(0, i);
-            await sleep(rand(cfg.typeMin, cfg.typeJitter));
-          }
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const rand = (min, jitter) => min + Math.floor(Math.random() * jitter);
+
+    async function typeInto(el, text) {
+      el.textContent = "";
+      for (let i = 1; i <= text.length; i++) {
+        el.textContent = text.slice(0, i);
+        await sleep(rand(cfg.typeMin, cfg.typeJitter));
+      }
+    }
+
+    async function deleteFrom(el, text) {
+      for (let i = text.length; i >= 0; i--) {
+        el.textContent = text.slice(0, i);
+        await sleep(rand(cfg.deleteMin, cfg.deleteJitter));
+      }
+    }
+
+    async function runOnce() {
+      if (reduceMotion) {
+        const last = SEQ[SEQ.length - 1];
+        prefix.textContent = last.prefix || "";
+        strike.classList.remove("strike");
+        strike.textContent = (last.text || "") + (last.finalText || "");
+        return;
+      }
+
+      for (const step of SEQ) {
+        prefix.textContent = step.prefix || "";
+        strike.classList.remove("strike");
+
+        if (step.finalText) {
+          await typeInto(strike, (step.text || "") + step.finalText);
+          await sleep(2400);
+          await deleteFrom(strike, (step.text || "") + step.finalText);
+          strike.classList.remove("strike");
+          await sleep(250);
+          return;
         }
 
-        async function deleteFrom(el, text) {
-          for (let i = text.length; i >= 0; i--) {
-            el.textContent = text.slice(0, i);
-            await sleep(rand(cfg.deleteMin, cfg.deleteJitter));
-          }
+        await typeInto(strike, step.text || "");
+
+        if (!step.strikeAndDelete) {
+          await sleep(2400);
+          await deleteFrom(strike, step.text || "");
+          await sleep(250);
+          return;
         }
 
-        async function runOnce() {
-          if (reduceMotion) {
-            const last = SEQ[SEQ.length - 1];
-            prefix.textContent = last.prefix || "";
-            strike.classList.remove("strike");
-            strike.textContent = (last.text || "") + (last.finalText || "");
-            return;
-          }
+        await sleep(cfg.afterTypePause);
+        strike.classList.add("strike");
+        await sleep(cfg.afterStrikePause);
+        await deleteFrom(strike, step.text || "");
+        strike.classList.remove("strike");
+        await sleep(cfg.afterDeletePause);
+      }
+    }
 
-          for (const step of SEQ) {
-            prefix.textContent = step.prefix || "";
-            strike.classList.remove("strike");
+    async function loop() {
+      while (true) {
+        await runOnce();
+        await sleep(900);
+      }
+    }
 
-            if (step.finalText) {
-              await typeInto(strike, (step.text || "") + step.finalText);
-              // Hold the final line so it can be read, then clear for next loop.
-              await sleep(2400);
-              await deleteFrom(strike, (step.text || "") + step.finalText);
-              strike.classList.remove("strike");
-              await sleep(250);
-              return;
-            }
+    loop();
+  })();
+</script>
+```
 
-            await typeInto(strike, step.text || "");
-
-            if (!step.strikeAndDelete) {
-              await sleep(2400);
-              await deleteFrom(strike, step.text || "");
-              await sleep(250);
-              return;
-            }
-
-            await sleep(cfg.afterTypePause);
-            strike.classList.add("strike");
-            await sleep(cfg.afterStrikePause);
-            await deleteFrom(strike, step.text || "");
-            strike.classList.remove("strike");
-            await sleep(cfg.afterDeletePause);
-          }
-        }
-
-        async function loop() {
-          while (true) {
-            await runOnce();
-            // Small pause between full cycles
-            await sleep(900);
-          }
-        }
-
-        loop();
-      })();
-    </script>
   </body>
 </html>

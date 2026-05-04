@@ -140,51 +140,11 @@ h1{font-size:26px;font-weight:800;margin:8px 0 6px;text-transform:uppercase;lett
 
 <script>
 /* ── Password ── */
-// Simple hash so the password isn't in plain text in source
-const HASH='8f14e45fceea167a5a36dedd4bea2543'; // md5 of 'bobsleigh' (7 chars)
-function md5(s){
-  // Minimal md5 for single-use password check
-  function R(n,c){return(n<<c)|(n>>>(32-c))}
-  function M(a,b){var c,d,e,f,g;e=a&2147483648;f=b&2147483648;c=a&1073741824;d=b&1073741824;g=(a&1073741823)+(b&1073741823);if(c&d)return g^2147483648^e^f;if(c|d){if(g&1073741824)return g^3221225472^e^f;else return g^1073741824^e^f}else return g^e^f}
-  function F(x,y,z){return(x&y)|((~x)&z)}
-  function G(x,y,z){return(x&z)|(y&(~z))}
-  function H(x,y,z){return x^y^z}
-  function I(x,y,z){return y^(x|(~z))}
-  function FF(a,b,c,d,x,s,t){a=M(a,M(M(F(b,c,d),x),t));return M(R(a,s),b)}
-  function GG(a,b,c,d,x,s,t){a=M(a,M(M(G(b,c,d),x),t));return M(R(a,s),b)}
-  function HH(a,b,c,d,x,s,t){a=M(a,M(M(H(b,c,d),x),t));return M(R(a,s),b)}
-  function II(a,b,c,d,x,s,t){a=M(a,M(M(I(b,c,d),x),t));return M(R(a,s),b)}
-  function toWords(s){var l=s.length,w=[],i;for(i=0;i<l-3;i+=4)w.push(s.charCodeAt(i)|(s.charCodeAt(i+1)<<8)|(s.charCodeAt(i+2)<<16)|(s.charCodeAt(i+3)<<24));var r=l%4;if(r===0)w.push(128);else if(r===1)w.push(s.charCodeAt(l-1)|32768);else if(r===2)w.push(s.charCodeAt(l-2)|(s.charCodeAt(l-1)<<8)|8388608);else w.push(s.charCodeAt(l-3)|(s.charCodeAt(l-2)<<8)|(s.charCodeAt(l-1)<<16)|2147483648);while(w.length%16!==14)w.push(0);w.push(l*8);w.push(0);return w}
-  function toHex(n){var s='',i,v;for(i=0;i<4;i++){v=(n>>(i*8))&255;s+=('0'+v.toString(16)).slice(-2)}return s}
-  var x=toWords(s),a=1732584193,b=4023233417,c=2562383102,d=271733878,AA,BB,CC,DD;
-  for(var k=0;k<x.length;k+=16){
-    AA=a;BB=b;CC=c;DD=d;
-    a=FF(a,b,c,d,x[k],7,3614090360);d=FF(d,a,b,c,x[k+1],12,3905402710);c=FF(c,d,a,b,x[k+2],17,606105819);b=FF(b,c,d,a,x[k+3],22,3250441966);
-    a=FF(a,b,c,d,x[k+4],7,4118548399);d=FF(d,a,b,c,x[k+5],12,1200080426);c=FF(c,d,a,b,x[k+6],17,2821735955);b=FF(b,c,d,a,x[k+7],22,4249261313);
-    a=FF(a,b,c,d,x[k+8],7,1770035416);d=FF(d,a,b,c,x[k+9],12,2336552879);c=FF(c,d,a,b,x[k+10],17,4294925233);b=FF(b,c,d,a,x[k+11],22,2304563134);
-    a=FF(a,b,c,d,x[k+12],7,1804603682);d=FF(d,a,b,c,x[k+13],12,4254626195);c=FF(c,d,a,b,x[k+14],17,2792965006);b=FF(b,c,d,a,x[k+15],22,1236535329);
-    a=GG(a,b,c,d,x[k+1],5,4129170786);d=GG(d,a,b,c,x[k+6],9,3225465664);c=GG(c,d,a,b,x[k+11],14,643717713);b=GG(b,c,d,a,x[k],20,3921069994);
-    a=GG(a,b,c,d,x[k+5],5,3593408605);d=GG(d,a,b,c,x[k+10],9,38016083);c=GG(c,d,a,b,x[k+15],14,3634488961);b=GG(b,c,d,a,x[k+4],20,3889429448);
-    a=GG(a,b,c,d,x[k+9],5,568446438);d=GG(d,a,b,c,x[k+14],9,3275163606);c=GG(c,d,a,b,x[k+3],14,4107603335);b=GG(b,c,d,a,x[k+8],20,1163531501);
-    a=GG(a,b,c,d,x[k+13],5,2850285829);d=GG(d,a,b,c,x[k+2],9,4243563512);c=GG(c,d,a,b,x[k+7],14,1735328473);b=GG(b,c,d,a,x[k+12],20,2368359562);
-    a=HH(a,b,c,d,x[k+5],4,4294588738);d=HH(d,a,b,c,x[k+8],11,2272392833);c=HH(c,d,a,b,x[k+11],16,1839030562);b=HH(b,c,d,a,x[k+14],23,4259657740);
-    a=HH(a,b,c,d,x[k+1],4,2763975236);d=HH(d,a,b,c,x[k+4],11,1272893353);c=HH(c,d,a,b,x[k+7],16,4139469664);b=HH(b,c,d,a,x[k+10],23,3200236656);
-    a=HH(a,b,c,d,x[k+13],4,681279174);d=HH(d,a,b,c,x[k],11,3936430074);c=HH(c,d,a,b,x[k+3],16,3572445317);b=HH(b,c,d,a,x[k+6],23,76029189);
-    a=HH(a,b,c,d,x[k+9],4,3654602809);d=HH(d,a,b,c,x[k+12],11,3873151461);c=HH(c,d,a,b,x[k+15],16,530742520);b=HH(b,c,d,a,x[k+2],23,3299628645);
-    a=II(a,b,c,d,x[k],6,4096336452);d=II(d,a,b,c,x[k+7],10,1126891415);c=II(c,d,a,b,x[k+14],15,2878612391);b=II(b,c,d,a,x[k+5],21,4237533241);
-    a=II(a,b,c,d,x[k+12],6,1700485571);d=II(d,a,b,c,x[k+3],10,2399980690);c=II(c,d,a,b,x[k+10],15,4293915773);b=II(b,c,d,a,x[k+1],21,2240044497);
-    a=II(a,b,c,d,x[k+8],6,1873313359);d=II(d,a,b,c,x[k+15],10,4264355552);c=II(c,d,a,b,x[k+6],15,2734768916);b=II(b,c,d,a,x[k+13],21,1309151649);
-    a=II(a,b,c,d,x[k+4],6,4149444226);d=II(d,a,b,c,x[k+11],10,3174756917);c=II(c,d,a,b,x[k+2],15,718787259);b=II(b,c,d,a,x[k+9],21,3951481745);
-    a=M(a,AA);b=M(b,BB);c=M(c,CC);d=M(d,DD);
-  }
-  return toHex(a)+toHex(b)+toHex(c)+toHex(d);
-}
-
 function checkPassword(){
   var input=document.getElementById('gateInput');
   var err=document.getElementById('gateError');
   var val=input.value.trim().toLowerCase();
-  if(md5(val)===HASH){
+  if(val==='bobsleigh'){
     sessionStorage.setItem('bbsa_auth','1');
     unlock();
   } else {

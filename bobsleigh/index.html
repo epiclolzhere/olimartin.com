@@ -1,1 +1,285 @@
-hello
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>BBSA Trials – 5-Week Sprint & Power Programme</title>
+<meta property="og:title" content="BBSA Trials – 5-Week Sprint & Power Programme">
+<meta property="og:description" content="Standing Long Jump · CMJ · 60m Sprint – Training plan for British Bobsleigh & Skeleton trials">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Barlow Condensed','Barlow',sans-serif;background:#0A0C10;color:#E8E8E8;min-height:100vh;min-height:100dvh;overflow-x:hidden}
+  button{font-family:inherit;border:none;outline:none;-webkit-appearance:none}
+
+/* ── Password gate ── */
+#gate{position:fixed;inset:0;background:#0A0C10;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px;transition:opacity .4s,visibility .4s}
+#gate.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.gate-inner{text-align:center;max-width:320px;width:100%}
+.gate-tag{font-size:10px;letter-spacing:4px;color:#E85D2A;font-weight:700;margin-bottom:12px;display:block}
+.gate-title{font-size:24px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.gate-sub{font-size:13px;color:#555;font-family:‘Barlow’,sans-serif;margin-bottom:28px}
+.gate-input{width:100%;padding:14px 16px;background:#111318;border:2px solid #1E2028;border-radius:8px;color:#E8E8E8;font-size:16px;font-family:‘Barlow’,sans-serif;letter-spacing:1px;text-align:center;transition:border-color .2s}
+.gate-input:focus{border-color:#E85D2A;outline:none}
+.gate-input.error{border-color:#E8432A;animation:shake .35s ease-in-out}
+.gate-btn{width:100%;padding:14px;margin-top:12px;background:#E85D2A;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:2px;cursor:pointer;font-family:‘Barlow Condensed’,sans-serif;transition:background .15s}
+.gate-btn:hover{background:#D04E20}
+.gate-btn:active{background:#B8431A}
+.gate-error-msg{font-size:12px;color:#E8432A;font-family:‘Barlow’,sans-serif;margin-top:10px;min-height:18px}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+/* ── App ── */
+#app{display:none}
+#app.visible{display:block}
+
+.header{background:linear-gradient(160deg,#0A0C10 0%,#141720 50%,#0A0C10 100%);border-bottom:2px solid #E85D2A;padding:24px 20px 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between}
+.header-tag{font-size:10px;letter-spacing:4px;color:#E85D2A;font-weight:700}
+.header-date{font-size:10px;letter-spacing:1.5px;color:#22B34E;font-weight:700;background:#22B34E15;padding:4px 10px;border-radius:4px}
+h1{font-size:26px;font-weight:800;margin:8px 0 6px;text-transform:uppercase;letter-spacing:.5px;line-height:1.1}
+.subtitle{font-size:12px;color:#666;font-family:‘Barlow’,sans-serif}
+
+.phase-bar{display:flex;padding:0 20px;margin-top:16px}
+.phase-item{padding:8px 0;text-align:center;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:all .2s;border-bottom:3px solid #151820}
+
+.week-tabs{display:flex;gap:6px;padding:14px 20px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.week-tab{flex:1;min-width:56px;padding:10px 4px 8px;border:2px solid #1A1D24;border-radius:8px;background:#111318;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .15s}
+.week-tab .wnum{font-size:13px;font-weight:700;color:#555;font-family:‘Barlow Condensed’,sans-serif}
+.week-tab .wdate{font-size:9px;color:#333;font-family:‘Barlow’,sans-serif}
+
+.week-info{padding:0 20px 10px}
+.week-title-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.week-title{font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.week-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:1px}
+.week-dates{font-size:12px;color:#888;margin:0 0 2px;font-family:‘Barlow’,sans-serif;line-height:1.5}
+.week-focus{font-size:13px;color:#999;margin:0;font-family:‘Barlow’,sans-serif;line-height:1.5}
+
+.sessions{padding:0 20px}
+.session{margin-bottom:6px}
+.session-header{width:100%;padding:12px 14px;background:#111318;border:1px solid #1A1D24;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .15s}
+.session-header.expanded{border-radius:8px 8px 0 0}
+.session-day{font-size:10px;font-weight:700;min-width:52px;text-align:left;font-family:‘Barlow Condensed’,sans-serif;letter-spacing:.5px}
+.session-title{font-size:13px;font-weight:600;flex:1;text-align:left;font-family:‘Barlow Condensed’,sans-serif;text-transform:uppercase;letter-spacing:.5px}
+.session-arrow{font-size:14px;color:#333;transition:transform .2s;user-select:none}
+.session-arrow.open{transform:rotate(180deg)}
+
+.session-body{background:#111318;border:1px solid;border-top:none;border-radius:0 0 8px 8px;padding:14px;display:none}
+.session-body.visible{display:block}
+.session-body.test-body{background:#0C1510}
+
+.block{margin-bottom:14px}
+.block:last-child{margin-bottom:0}
+.block-heading{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;font-family:‘Barlow Condensed’,sans-serif}
+.block-item{font-size:12px;color:#A0A0A0;padding:4px 0;font-family:‘Barlow’,sans-serif;line-height:1.5;display:flex;gap:8px}
+.block-item+.block-item{border-top:1px solid #161820}
+.block-item .dash{color:#252830;user-select:none;flex-shrink:0}
+.test-body .block-item .dash{color:#22B34E30}
+
+.toggle-btn{width:100%;padding:12px 14px;background:#111318;border:1px solid #1A1D24;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:‘Barlow Condensed’,sans-serif}
+.toggle-btn.open{background:#14120E;border-color:#E8A82A40}
+.toggle-label{font-size:13px;font-weight:700;color:#E8A82A;text-transform:uppercase;letter-spacing:1px}
+.toggle-arrow{font-size:14px;color:#E8A82A;transition:transform .2s}
+.toggle-arrow.open{transform:rotate(180deg)}
+
+.principles{padding:0 20px 20px;display:none}
+.principles.visible{display:block}
+.principles-box{background:#111318;border:1px solid #1A1D24;border-radius:8px;padding:14px}
+.principle{font-size:12px;color:#999;padding:6px 0;font-family:‘Barlow’,sans-serif;line-height:1.5;display:flex;gap:10px;align-items:flex-start}
+.principle+.principle{border-top:1px solid #161820}
+.principle .emoji{font-size:13px;flex-shrink:0}
+
+.countdown{margin:8px 20px 30px;padding:14px 16px;background:linear-gradient(135deg,#0C1510 0%,#0A0C10 100%);border-radius:8px;border:1px solid #22B34E25;text-align:center}
+.countdown span{font-size:11px;font-weight:700;color:#22B34E;letter-spacing:3px;text-transform:uppercase;font-family:‘Barlow Condensed’,sans-serif}
+</style>
+
+</head>
+<body>
+
+<!-- ── Password Gate ── -->
+
+<div id="gate">
+  <div class="gate-inner">
+    <span class="gate-tag">BBSA TRIALS PREP</span>
+    <div class="gate-title">Locked</div>
+    <p class="gate-sub">Enter the password to view the programme</p>
+    <input class="gate-input" id="gateInput" type="password" placeholder="Password" autocomplete="off" autofocus>
+    <button class="gate-btn" id="gateBtn" onclick="checkPassword()">Enter</button>
+    <div class="gate-error-msg" id="gateError"></div>
+  </div>
+</div>
+
+<!-- ── Main App ── -->
+
+<div id="app">
+  <div class="header">
+    <div class="header-row">
+      <span class="header-tag">BBSA TRIALS PREP</span>
+      <span class="header-date">TEST: SAT 6 JUNE</span>
+    </div>
+    <h1>5-Week Sprint &amp;<br>Power Programme</h1>
+    <p class="subtitle">Dumbbells · 30" Plyo Box · Treadmill · Outdoor Sprints · Parkrun Saturdays</p>
+  </div>
+
+  <div class="phase-bar" id="phaseBar"></div>
+  <div class="week-tabs" id="weekTabs"></div>
+  <div class="week-info" id="weekInfo"></div>
+  <div class="sessions" id="sessions"></div>
+
+  <div style="padding:20px 20px 8px">
+    <button class="toggle-btn" id="principlesToggle" onclick="togglePrinciples()">
+      <span class="toggle-label">Non-Negotiables &amp; Ground Rules</span>
+      <span class="toggle-arrow" id="principlesArrow">▾</span>
+    </button>
+  </div>
+  <div class="principles" id="principlesPanel"></div>
+  <div class="countdown" id="countdown"></div>
+</div>
+
+<script>
+/* ── Password ── */
+// Simple hash so the password isn't in plain text in source
+const HASH='8f14e45fceea167a5a36dedd4bea2543'; // md5 of 'bobsleigh' (7 chars)
+function md5(s){
+  // Minimal md5 for single-use password check
+  function R(n,c){return(n<<c)|(n>>>(32-c))}
+  function M(a,b){var c,d,e,f,g;e=a&2147483648;f=b&2147483648;c=a&1073741824;d=b&1073741824;g=(a&1073741823)+(b&1073741823);if(c&d)return g^2147483648^e^f;if(c|d){if(g&1073741824)return g^3221225472^e^f;else return g^1073741824^e^f}else return g^e^f}
+  function F(x,y,z){return(x&y)|((~x)&z)}
+  function G(x,y,z){return(x&z)|(y&(~z))}
+  function H(x,y,z){return x^y^z}
+  function I(x,y,z){return y^(x|(~z))}
+  function FF(a,b,c,d,x,s,t){a=M(a,M(M(F(b,c,d),x),t));return M(R(a,s),b)}
+  function GG(a,b,c,d,x,s,t){a=M(a,M(M(G(b,c,d),x),t));return M(R(a,s),b)}
+  function HH(a,b,c,d,x,s,t){a=M(a,M(M(H(b,c,d),x),t));return M(R(a,s),b)}
+  function II(a,b,c,d,x,s,t){a=M(a,M(M(I(b,c,d),x),t));return M(R(a,s),b)}
+  function toWords(s){var l=s.length,w=[],i;for(i=0;i<l-3;i+=4)w.push(s.charCodeAt(i)|(s.charCodeAt(i+1)<<8)|(s.charCodeAt(i+2)<<16)|(s.charCodeAt(i+3)<<24));var r=l%4;if(r===0)w.push(128);else if(r===1)w.push(s.charCodeAt(l-1)|32768);else if(r===2)w.push(s.charCodeAt(l-2)|(s.charCodeAt(l-1)<<8)|8388608);else w.push(s.charCodeAt(l-3)|(s.charCodeAt(l-2)<<8)|(s.charCodeAt(l-1)<<16)|2147483648);while(w.length%16!==14)w.push(0);w.push(l*8);w.push(0);return w}
+  function toHex(n){var s='',i,v;for(i=0;i<4;i++){v=(n>>(i*8))&255;s+=('0'+v.toString(16)).slice(-2)}return s}
+  var x=toWords(s),a=1732584193,b=4023233417,c=2562383102,d=271733878,AA,BB,CC,DD;
+  for(var k=0;k<x.length;k+=16){
+    AA=a;BB=b;CC=c;DD=d;
+    a=FF(a,b,c,d,x[k],7,3614090360);d=FF(d,a,b,c,x[k+1],12,3905402710);c=FF(c,d,a,b,x[k+2],17,606105819);b=FF(b,c,d,a,x[k+3],22,3250441966);
+    a=FF(a,b,c,d,x[k+4],7,4118548399);d=FF(d,a,b,c,x[k+5],12,1200080426);c=FF(c,d,a,b,x[k+6],17,2821735955);b=FF(b,c,d,a,x[k+7],22,4249261313);
+    a=FF(a,b,c,d,x[k+8],7,1770035416);d=FF(d,a,b,c,x[k+9],12,2336552879);c=FF(c,d,a,b,x[k+10],17,4294925233);b=FF(b,c,d,a,x[k+11],22,2304563134);
+    a=FF(a,b,c,d,x[k+12],7,1804603682);d=FF(d,a,b,c,x[k+13],12,4254626195);c=FF(c,d,a,b,x[k+14],17,2792965006);b=FF(b,c,d,a,x[k+15],22,1236535329);
+    a=GG(a,b,c,d,x[k+1],5,4129170786);d=GG(d,a,b,c,x[k+6],9,3225465664);c=GG(c,d,a,b,x[k+11],14,643717713);b=GG(b,c,d,a,x[k],20,3921069994);
+    a=GG(a,b,c,d,x[k+5],5,3593408605);d=GG(d,a,b,c,x[k+10],9,38016083);c=GG(c,d,a,b,x[k+15],14,3634488961);b=GG(b,c,d,a,x[k+4],20,3889429448);
+    a=GG(a,b,c,d,x[k+9],5,568446438);d=GG(d,a,b,c,x[k+14],9,3275163606);c=GG(c,d,a,b,x[k+3],14,4107603335);b=GG(b,c,d,a,x[k+8],20,1163531501);
+    a=GG(a,b,c,d,x[k+13],5,2850285829);d=GG(d,a,b,c,x[k+2],9,4243563512);c=GG(c,d,a,b,x[k+7],14,1735328473);b=GG(b,c,d,a,x[k+12],20,2368359562);
+    a=HH(a,b,c,d,x[k+5],4,4294588738);d=HH(d,a,b,c,x[k+8],11,2272392833);c=HH(c,d,a,b,x[k+11],16,1839030562);b=HH(b,c,d,a,x[k+14],23,4259657740);
+    a=HH(a,b,c,d,x[k+1],4,2763975236);d=HH(d,a,b,c,x[k+4],11,1272893353);c=HH(c,d,a,b,x[k+7],16,4139469664);b=HH(b,c,d,a,x[k+10],23,3200236656);
+    a=HH(a,b,c,d,x[k+13],4,681279174);d=HH(d,a,b,c,x[k],11,3936430074);c=HH(c,d,a,b,x[k+3],16,3572445317);b=HH(b,c,d,a,x[k+6],23,76029189);
+    a=HH(a,b,c,d,x[k+9],4,3654602809);d=HH(d,a,b,c,x[k+12],11,3873151461);c=HH(c,d,a,b,x[k+15],16,530742520);b=HH(b,c,d,a,x[k+2],23,3299628645);
+    a=II(a,b,c,d,x[k],6,4096336452);d=II(d,a,b,c,x[k+7],10,1126891415);c=II(c,d,a,b,x[k+14],15,2878612391);b=II(b,c,d,a,x[k+5],21,4237533241);
+    a=II(a,b,c,d,x[k+12],6,1700485571);d=II(d,a,b,c,x[k+3],10,2399980690);c=II(c,d,a,b,x[k+10],15,4293915773);b=II(b,c,d,a,x[k+1],21,2240044497);
+    a=II(a,b,c,d,x[k+8],6,1873313359);d=II(d,a,b,c,x[k+15],10,4264355552);c=II(c,d,a,b,x[k+6],15,2734768916);b=II(b,c,d,a,x[k+13],21,1309151649);
+    a=II(a,b,c,d,x[k+4],6,4149444226);d=II(d,a,b,c,x[k+11],10,3174756917);c=II(c,d,a,b,x[k+2],15,718787259);b=II(b,c,d,a,x[k+9],21,3951481745);
+    a=M(a,AA);b=M(b,BB);c=M(c,CC);d=M(d,DD);
+  }
+  return toHex(a)+toHex(b)+toHex(c)+toHex(d);
+}
+
+function checkPassword(){
+  var input=document.getElementById('gateInput');
+  var err=document.getElementById('gateError');
+  var val=input.value.trim().toLowerCase();
+  if(md5(val)===HASH){
+    sessionStorage.setItem('bbsa_auth','1');
+    unlock();
+  } else {
+    input.classList.add('error');
+    err.textContent='Wrong password — try again';
+    setTimeout(function(){input.classList.remove('error')},400);
+    input.value='';
+    input.focus();
+  }
+}
+
+function unlock(){
+  document.getElementById('gate').classList.add('hidden');
+  document.getElementById('app').classList.add('visible');
+  render();
+}
+
+// Allow Enter key
+document.getElementById('gateInput').addEventListener('keydown',function(e){
+  if(e.key==='Enter')checkPassword();
+});
+
+// Check session
+if(sessionStorage.getItem('bbsa_auth')==='1') unlock();
+
+/* ── Training Data ── */
+const WEEKS=[{week:1,dates:"May 4 – 10",phase:"Power Foundation",phaseColor:"#E85D2A",focus:"Introduce explosive work alongside your existing training. Learn the movement patterns you'll be tested on. Get comfortable with the box.",sessions:[{day:"Mon 5th",title:"Lower Body Power + Strength",blocks:[{heading:"Warm-Up",items:["10 min easy treadmill jog","Leg swings, hip circles, ankle rocks","2×5 bodyweight squat jumps (wake up the CNS)"]},{heading:"Power — Box & Jumps",items:["Box Jump (step down) — 4×4 @ 24\" (focus: fast hips, stick the landing)","Standing Broad Jump — 5×2 (chalk a line, measure each, full reset between reps)","CMJ practice — 4×2 (focus: quick dip, violent arm swing, full triple extension)"]},{heading:"Strength — Dumbbells",items:["DB Goblet Squat — 4×8 @ heavy","DB Romanian Deadlift — 4×8","DB Bulgarian Split Squat — 3×8 each leg (rear foot on box)","DB Step-Ups — 3×6 each leg @ 24\" box"]},{heading:"Accessory",items:["Single-Leg Calf Raises (on box edge) — 3×12 each","Bodyweight Nordic Curl (use DB or anchor) — 3×4-5"]}]},{day:"Tue 6th",title:"Sprint & Plyometrics",blocks:[{heading:"Warm-Up",items:["Dynamic drills: A-skips, B-skips, high knees, butt kicks — 2 passes each","3× build-ups over 30m (ramp to ~80%)"]},{heading:"Sprint Work (outdoors)",items:["5×30m from standing start — full recovery (walk back + 90s)","Focus: aggressive first 3 steps, forward lean, drive arms cheek-to-hip"]},{heading:"Plyometrics",items:["Lateral Bounds — 3×5 each side","Ankle Hops (stiffness drill) — 3×10","Tuck Jumps — 3×4"]}]},{day:"Wed 7th",title:"Off / Recovery",blocks:[{heading:"Recovery",items:["Easy 15-20 min walk","Foam roll: quads, glutes, calves, hip flexors","Hip & ankle mobility — 10 min"]}]},{day:"Thu 8th",title:"Upper Body + Core",blocks:[{heading:"Strength",items:["DB Bench Press — 4×8","DB Bent-Over Row — 4×8","DB Push Press — 3×6 (explosive drive from legs)","DB Renegade Row — 3×6 each side"]},{heading:"Core / Power Transfer",items:["DB Woodchop — 3×8 each side","Hollow Body Hold — 3×20s","Plank Shoulder Taps — 3×10 each side"]}]},{day:"Fri 9th",title:"Speed-Strength + Jump Practice",blocks:[{heading:"Explosive",items:["DB Jump Squat — 5×3 (light-moderate weight, SPEED is king)","Box Jump — 4×3 @ 28-30\" (step down, focus: maximal hip drive)","Depth Drop from box (20-24\") to Broad Jump — 4×2"]},{heading:"Strength",items:["DB Front Squat — 4×6 @ heavy","DB Hip Thrust (shoulders on box) — 4×8 @ heavy","DB Reverse Lunge — 3×6 each leg"]}]},{day:"Sat 10th",title:"Parkrun",blocks:[{heading:"Parkrun",items:["Run at EASY-MODERATE pace — this is not a PB attempt","Treat it as your aerobic base / active recovery session","The goal is to keep the routine without trashing your legs","If legs feel heavy from the week, jog it comfortably"]}]},{day:"Sun 11th",title:"Rest",blocks:[{heading:"",items:["Full rest. Sleep 8+ hours. Eat well — high protein, adequate carbs."]}]}]},{week:2,dates:"May 11 – 17",phase:"Power Development",phaseColor:"#E85D2A",focus:"Increase intensity on jumps and sprints. Extend sprint distance to 40-60m. Start timing your 60m efforts.",sessions:[{day:"Mon 12th",title:"Lower Body Power + Strength",blocks:[{heading:"Power",items:["Box Jump — 4×4 @ 28-30\" (fast and aggressive)","Standing Broad Jump — 6×2 (measure every rep, track best)","CMJ — 5×2 (focus: arm swing timing, quick dip, explode UP)"]},{heading:"Strength",items:["DB Goblet Squat — 4×6 @ heavier than last week","DB Single-Leg RDL — 3×8 each","DB Bulgarian Split Squat — 4×6 each leg @ heavier","DB Calf Raise (on box) — 3×15"]}]},{day:"Tue 13th",title:"Sprint & Plyometrics",blocks:[{heading:"Sprint Work",items:["Full dynamic warm-up + 3 build-ups to 85%","3×30m from standing — full recovery","3×40m from standing — full recovery","2×60m at 90-95% — TIME THESE (baseline numbers)","Full recovery between all max efforts: 3-5 min"]},{heading:"Plyometrics",items:["Single-Leg Bounds — 3×4 each","Lateral Bounds — 3×5 each","Pogo Hops — 3×10 (stiff ankle, quick ground contact)"]}]},{day:"Wed 14th",title:"Off / Recovery",blocks:[{heading:"Recovery",items:["Light walk or easy 15 min treadmill","Thorough foam roll + hip/ankle mobility"]}]},{day:"Thu 15th",title:"Upper Body + Core",blocks:[{heading:"Strength",items:["DB Bench Press — 4×6 @ heavier","DB Single-Arm Row — 4×6 each","DB Push Press — 4×5 explosive","DB Lateral Raise — 3×10"]},{heading:"Core",items:["DB Woodchop — 3×8 each side","Hanging Knee/Leg Raises (or lying) — 3×10","Dead Bug — 3×8 each side"]}]},{day:"Fri 16th",title:"Speed-Strength + Jumps",blocks:[{heading:"Explosive",items:["DB Jump Squat — 5×3 (moderate DB, MAX speed)","Depth Drop (24\") to Broad Jump — 5×2 (react fast off the ground)","CMJ — 4×2 (pretend it's test day — full routine, max effort)"]},{heading:"Strength",items:["DB Front Squat — 4×5 @ heavy","DB Hip Thrust — 4×6 @ heavy","DB Step-Ups @ 30\" box — 3×5 each (drive up explosively)"]}]},{day:"Sat 17th",title:"Parkrun",blocks:[{heading:"Parkrun",items:["Easy-moderate effort again — no racing","Use it as moving recovery for the legs"]}]},{day:"Sun 18th",title:"Rest",blocks:[{heading:"",items:["Full rest. Recover and refuel."]}]}]},{week:3,dates:"May 18 – 24",phase:"Power-Speed",phaseColor:"#2A7BE8",focus:"Peak power week. Drop some strength volume, increase jump and sprint intensity. Every explosive rep at maximal intent.",sessions:[{day:"Mon 19th",title:"Explosive Lower Body",blocks:[{heading:"Power (priority)",items:["Box Jump — 4×3 @ 30\" (maximal hip drive, stick landing)","Standing Broad Jump — 6×2 MAX effort (measure all, beat last week)","CMJ — 5×2 MAX effort (full arm swing, quick dip, triple extension)","Depth Jump (24\") to Vertical Jump — 4×2 (minimal ground contact time)"]},{heading:"Strength (maintenance)",items:["DB Goblet Squat — 3×5 @ heavy","DB Hip Thrust — 3×6 @ heavy"]}]},{day:"Tue 20th",title:"Sprint Focus",blocks:[{heading:"Sprint Work",items:["Full dynamic warm-up (this should now be your standardised routine)","2×20m from 3-point start — focus: first step explosiveness","3×40m max effort — full recovery","3×60m max effort — TIME EVERY ONE — full recovery (4-5 min)","Every rep = race day intent. No junk."]},{heading:"Plyometrics",items:["Standing Broad Jump — 4×2 (competition sim: step up, pause, explode)","Lateral Bounds — 3×4 each"]}]},{day:"Wed 21st",title:"Off",blocks:[{heading:"",items:["Complete rest or gentle walk. Save your legs."]}]},{day:"Thu 22nd",title:"Upper Body (reduced) + Core",blocks:[{heading:"Upper",items:["DB Bench Press — 3×5","DB Row — 3×6","Explosive Push-Ups — 3×5"]},{heading:"Core",items:["Hollow Body Hold — 3×25s","DB Woodchop — 3×6 each","Plank — 2×30s"]}]},{day:"Fri 23rd",title:"FULL TRIAL SIMULATION",blocks:[{heading:"Dress Rehearsal",items:["Perform your exact trial-day warm-up (standardise it NOW)","Standing Broad Jump — 2 max efforts (as per test: 2 attempts)","CMJ — 2 max efforts (as per test: 2 attempts)","60m sprint — 2 max efforts with full recovery (as per test)","RECORD EVERY NUMBER — these are your benchmark scores","This is the most important session of the plan. Treat it like the real thing."]}]},{day:"Sat 24th",title:"Parkrun",blocks:[{heading:"Parkrun",items:["Easy jog only — your legs will be feeling Friday's simulation","If you feel genuinely battered, skip and walk instead"]}]},{day:"Sun 25th",title:"Rest",blocks:[{heading:"",items:["Full rest."]}]}]},{week:4,dates:"May 25 – 31",phase:"Sharpening",phaseColor:"#2A7BE8",focus:"Volume drops significantly. Keep CNS firing with short, sharp sessions. You should start feeling springy and restless.",sessions:[{day:"Mon 26th",title:"CNS Activation + Jumps",blocks:[{heading:"Activation",items:["Box Jump — 3×3 @ 30\" (fast, crisp, step down)","CMJ — 4×2 MAX (full routine, max intent)","Standing Broad Jump — 4×2 MAX (measure, compare to last week)"]},{heading:"Light Strength",items:["DB Goblet Squat — 3×4 @ moderate","DB Hip Thrust — 3×5","Session should feel SHORT and SHARP — 35-40 min total"]}]},{day:"Tue 27th",title:"Sprint Sharpeners",blocks:[{heading:"Sprint",items:["Standard warm-up","3×20m from standing — MAX intent","2×40m — sharp and fast","1×60m at 95% — leave feeling quick, NOT depleted","Total sprint volume is LOW. Quality only."]}]},{day:"Wed 28th",title:"Off",blocks:[{heading:"",items:["Rest. Mobility if it makes you feel good."]}]},{day:"Thu 29th",title:"Light Power Primer",blocks:[{heading:"Primer",items:["DB Jump Squat — 3×3 light (feel explosive)","Box Jump — 3×2 @ 24-28\" (speed off the ground)","Broad Jump — 3×2 at 90% (technique, not fatigue)","Explosive Push-Ups — 2×5","In and out in 25 minutes."]}]},{day:"Fri 30th",title:"Short Sprint Touch",blocks:[{heading:"Sprint",items:["Standard warm-up","3×20m MAX from standing","1×30m MAX","DO NOT run a 60 this week — save it for Saturday the 6th"]}]},{day:"Sat 31st",title:"Parkrun — EASY or SKIP",blocks:[{heading:"Decision",items:["Option A: Skip entirely and walk 30 min instead (recommended)","Option B: Very easy 20-min jog, stop before 5K","You are one week from trials. Prioritise freshness over fitness.","No fitness will be gained this week — only lost through fatigue."]}]},{day:"Sun 1st",title:"Rest",blocks:[{heading:"",items:["Full rest. You're nearly there."]}]}]},{week:5,dates:"June 1 – 6",phase:"Taper & Peak",phaseColor:"#22B34E",focus:"Minimal volume. Just enough to keep the nervous system lit up. Arrive on Saturday FRESH, FAST, and EXPLOSIVE.",sessions:[{day:"Mon 1st",title:"Activation Only",blocks:[{heading:"Activation (20 min max)",items:["3×3 bodyweight squat jumps","CMJ — 3×1 at 90-95% (leave a bit in the tank)","Standing Broad Jump — 3×1 at 90-95%","Box Jump — 3×2 @ 24\" (fast, light, easy)","That's it. In and out. Feel sharp."]}]},{day:"Tue 2nd",title:"Short Sprint Sharpeners",blocks:[{heading:"Sprint",items:["Your standard warm-up (rehearse it perfectly — this is what you'll do Saturday)","3×20m from standing — MAX intent","1×30m sharp","No 40s. No 60s. Keep it short and electric."]}]},{day:"Wed 3rd",title:"Off",blocks:[{heading:"",items:["Complete rest. Light walk if you need to move."]}]},{day:"Thu 4th",title:"Activation Primer",blocks:[{heading:"Light Primer (15-20 min)",items:["2×3 bodyweight squat jumps","2×1 Standing Broad Jump at 85-90%","2×1 CMJ at 85-90%","2×10m acceleration from standing","This is just keeping the wiring hot. Nothing more."]}]},{day:"Fri 5th",title:"REST",blocks:[{heading:"Pre-Trial Day",items:["Complete rest — no training","Walk through your warm-up mentally","Prepare your kit: trainers/spikes, comfortable clothing, water, snacks","Plan your travel and arrival time — be there early","Light meal in the evening — carbs and protein, nothing new","Sleep early. 8-9 hours minimum."]}]},{day:"★ SAT 6th",title:"TEST DAY",blocks:[{heading:"Pre-Event",items:["Light breakfast 2-3 hours before (what you normally eat — nothing experimental)","Arrive 45-60 min early — no rushing, no stress","Sip water, stay loose, stay warm"]},{heading:"Warm-Up Protocol",items:["10 min easy jog (treadmill or around the venue)","Dynamic stretches: leg swings, hip circles, walking lunges","Movement drills: A-skips, B-skips — 2 passes each","3 progressive build-up sprints over 30m (60% → 75% → 85%)","2-3 practice broad jumps at 80%","2-3 practice CMJs at 80%","Stay WARM between events — keep moving, don't sit down"]},{heading:"Standing Long Jump — 2 Attempts",items:["Step up to the line with your exact rehearsed routine","Arm swing is EVERYTHING — throw your hands at the horizon","Load through the hips (hinge), not just the knees","Drive forward and UP at ~45°","Bring feet through late, land as far forward as possible","COMMIT. No hesitation."]},{heading:"Counter-Movement Jump — 2 Attempts",items:["Quick, fast dip — don't go deep, quarter squat is optimal","Arms: from behind hips to overhead in one violent swing","Think 'head through the ceiling'","Full triple extension — ankles, knees, hips","The faster the dip, the bigger the stretch reflex. FAST down, VIOLENT up."]},{heading:"60m Sprint — 2 Attempts",items:["First 3 steps: short, choppy, push BACK into the ground","Stay LOW for the first 10-15m — fight the urge to stand up early","Drive arms hard — hands cheek to hip pocket","Transition (15-30m): gradually rise to upright","Top speed (30-60m): tall posture, relaxed face and jaw, run THROUGH the line","Do NOT decelerate before the line — run 5m past it"]},{heading:"Between Attempts",items:["Walk, shake it out, stay warm","Don't overthink — trust the training","Second attempt: if first was good, repeat exactly. If not, one cue only."]}]}]}];
+
+const PHASES=[{label:"Power",range:[0,1],color:"#E85D2A",flex:2},{label:"Speed",range:[2,3],color:"#2A7BE8",flex:2},{label:"Peak",range:[4],color:"#22B34E",flex:1}];
+const PRINCIPLES=[{emoji:"🎯",text:"Every jump and sprint rep is MAXIMAL INTENT — no going through the motions"},{emoji:"⏱",text:"Full recovery between power sets (2-5 min) — you're training the nervous system, not your lungs"},{emoji:"😴",text:"Sleep 8+ hours — this is where you actually get faster and more powerful"},{emoji:"🍗",text:"High protein, adequate carbs. Don't cut calories during this block."},{emoji:"🏃",text:"Parkrun stays easy — it's for your head, not your legs. No racing until after June 6th."},{emoji:"⚠️",text:"If something feels tweaky (hamstring, knee, ankle) — BACK OFF. Arriving healthy beats arriving fit."},{emoji:"📏",text:"Measure your broad jumps and time your 60s from Week 2 onward — track your progress"}];
+
+let activeWeek=0,expandedDay=null;
+
+function render(){renderPhaseBar();renderWeekTabs();renderWeekInfo();renderSessions();renderPrinciples();renderCountdown()}
+
+function renderPhaseBar(){
+  document.getElementById('phaseBar').innerHTML=PHASES.map(p=>{
+    const a=p.range.includes(activeWeek);
+    return`<div class="phase-item" style="flex:${p.flex};color:${a?p.color:'#333'};border-bottom-color:${a?p.color:'#151820'}">${p.label}</div>`;
+  }).join('');
+}
+
+function renderWeekTabs(){
+  document.getElementById('weekTabs').innerHTML=WEEKS.map((w,i)=>{
+    const a=i===activeWeek;
+    const d=w.dates.split('–')[0].trim().replace('May ','').replace('June ','Jun ');
+    return`<button class="week-tab${a?' active':''}" style="${a?`--phase-color:${w.phaseColor};--phase-bg:${w.phaseColor}12;border-color:${w.phaseColor}`:''}" onclick="selectWeek(${i})"><span class="wnum">W${w.week}</span><span class="wdate">${d}</span></button>`;
+  }).join('');
+}
+
+function renderWeekInfo(){
+  const w=WEEKS[activeWeek];
+  document.getElementById('weekInfo').innerHTML=`<div class="week-title-row"><span class="week-title">Week ${w.week}</span><span class="week-badge" style="background:${w.phaseColor}18;color:${w.phaseColor}">${w.phase}</span></div><p class="week-dates">${w.dates}</p><p class="week-focus">${w.focus}</p>`;
+}
+
+function renderSessions(){
+  const w=WEEKS[activeWeek];
+  document.getElementById('sessions').innerHTML=w.sessions.map((s,i)=>{
+    const test=s.title==='TEST DAY';
+    const rest=['Rest','Off','Off / Recovery','REST'].includes(s.title);
+    const park=s.title.includes('Parkrun');
+    const accent=test?'#22B34E':park?'#888':rest?'#444':w.phaseColor;
+    const txt=test?'#22B34E':park?'#777':rest?'#555':'#CCC';
+    const exp=expandedDay===i;
+    const bc=test?'#22B34E50':exp?w.phaseColor+'35':'#1A1D24';
+    const hc=test?'#22B34E':w.phaseColor;
+    const dl=s.day.split(' ')[0].toUpperCase();
+    let body=s.blocks.map((b,bi)=>{
+      const items=b.items.map(it=>`<div class="block-item"><span class="dash">—</span><span>${it}</span></div>`).join('');
+      return`<div class="block"${bi<s.blocks.length-1?' style="margin-bottom:14px"':''}>${b.heading?`<div class="block-heading" style="color:${hc}">${b.heading}</div>`:''}${items}</div>`;
+    }).join('');
+    return`<div class="session"><button class="session-header${exp?' expanded':''}" style="border-color:${bc};${exp?'background:#14161C;':''}${test&&exp?'background:#0C1A10;':''}" onclick="toggleDay(${i})"><span class="session-day" style="color:${accent}">${dl}</span><span class="session-title" style="color:${txt};${test?'font-weight:800':''}">${s.title}</span>${test?'<span style="font-size:10px;color:#22B34E;font-weight:700">★</span>':''}<span class="session-arrow${exp?' open':''}">▾</span></button><div class="session-body${exp?' visible':''}${test?' test-body':''}" style="border-color:${bc}">${body}</div></div>`;
+  }).join('');
+}
+
+function renderPrinciples(){
+  document.getElementById('principlesPanel').innerHTML=`<div class="principles-box">${PRINCIPLES.map(p=>`<div class="principle"><span class="emoji">${p.emoji}</span><span>${p.text}</span></div>`).join('')}</div>`;
+}
+
+function renderCountdown(){
+  const d=Math.max(0,Math.ceil((new Date('2026-06-06T09:00:00')-new Date())/(864e5)));
+  document.getElementById('countdown').innerHTML=`<span>${d} DAY${d!==1?'S':''} TO TEST DAY — MAKE EVERY ONE COUNT</span>`;
+}
+
+function selectWeek(i){activeWeek=i;expandedDay=null;render()}
+function toggleDay(i){expandedDay=expandedDay===i?null:i;renderSessions()}
+function togglePrinciples(){
+  const p=document.getElementById('principlesPanel');
+  const b=document.getElementById('principlesToggle');
+  const a=document.getElementById('principlesArrow');
+  const o=p.classList.toggle('visible');
+  b.classList.toggle('open',o);
+  a.classList.toggle('open',o);
+}
+</script>
+
+</body>
+</html>

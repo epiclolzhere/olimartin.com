@@ -1,1 +1,474 @@
-hello world
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>46 Refreshment Rota</title>
+<meta name="description" content="Who's on refreshments each Thursday at 46, from 3 December 2026 to 25 November 2027.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #F5F6F8;
+  --surface: #FFFFFF;
+  --surface-2: #F4F5F7;
+  --ink: #1F2328;
+  --muted: #5B6470;
+  --rule: #D5D9DE;
+  --red: #C8102E;
+  --btn-red: #C8102E;
+  --off-fill: #EFEFEF;
+  --off-line: #DADADA;
+  --off-ink: #7A7F86;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #131518;
+    --surface: #1B1E22;
+    --surface-2: #22262B;
+    --ink: #E9ECEF;
+    --muted: #9AA3AE;
+    --rule: #30353B;
+    --red: #F2556B;
+    --off-fill: #23262A;
+    --off-line: #34383E;
+    --off-ink: #8A9099;
+  }
+}
+
+/* One colour per person, in rotation order */
+.p0 { --acc: #0369A1; --fill: #DCEEFB; }
+.p1 { --acc: #C2410C; --fill: #FFE8D6; }
+.p2 { --acc: #15803D; --fill: #DCF5E3; }
+.p3 { --acc: #B91C1C; --fill: #FDE2E2; }
+.p4 { --acc: #6D28D9; --fill: #EDE6FD; }
+.p5 { --acc: #0F766E; --fill: #D3F3EE; }
+.p6 { --acc: #A16207; --fill: #FCF1C4; }
+.p7 { --acc: #BE185D; --fill: #FCE4F0; }
+.p8 { --acc: #7C4A1E; --fill: #F3E7DA; }
+.p9 { --acc: #4338CA; --fill: #E2E5FD; }
+@media (prefers-color-scheme: dark) {
+  .p0 { --acc: #38BDF8; --fill: rgba(56,189,248,.17); }
+  .p1 { --acc: #FB923C; --fill: rgba(251,146,60,.17); }
+  .p2 { --acc: #4ADE80; --fill: rgba(74,222,128,.15); }
+  .p3 { --acc: #F87171; --fill: rgba(248,113,113,.17); }
+  .p4 { --acc: #A78BFA; --fill: rgba(167,139,250,.18); }
+  .p5 { --acc: #2DD4BF; --fill: rgba(45,212,191,.15); }
+  .p6 { --acc: #FACC15; --fill: rgba(250,204,21,.14); }
+  .p7 { --acc: #F472B6; --fill: rgba(244,114,182,.17); }
+  .p8 { --acc: #D6A274; --fill: rgba(214,162,116,.17); }
+  .p9 { --acc: #818CF8; --fill: rgba(129,140,248,.18); }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Fira Sans", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
+.wrap { max-width: 1060px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+h1, h2, h3, p { margin: 0; }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+
+/* Header */
+.top {
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+  gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule);
+}
+.title { border-left: 6px solid var(--red); padding-left: .85rem; }
+h1 { font-size: clamp(1.6rem, 5vw, 2.1rem); font-weight: 700; line-height: 1.1; letter-spacing: -.01em; }
+.sub { color: var(--muted); margin-top: .3rem; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font: 600 .9rem/1 inherit; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
+  padding: .6rem .8rem; text-decoration: none; white-space: nowrap; cursor: pointer;
+}
+.btn:hover { border-color: var(--muted); }
+.btn svg { width: 1.05rem; height: 1.05rem; flex: none; }
+.btn.primary { background: var(--btn-red); border-color: var(--btn-red); color: #fff; }
+.btn.primary:hover { filter: brightness(1.08); }
+
+/* Pills */
+.pill {
+  position: relative; display: flex; align-items: center;
+  min-height: 2rem; padding: .3rem .6rem .3rem .85rem;
+  background: var(--fill); border-radius: 5px; overflow: hidden;
+  font-weight: 600; color: var(--ink);
+}
+.pill::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--acc); }
+.off {
+  background: repeating-linear-gradient(135deg, var(--off-fill) 0 4px, var(--off-line) 4px 5px);
+  color: var(--off-ink);
+}
+.off::before { display: none; }
+.pill.off { flex-direction: column; align-items: flex-start; justify-content: center; line-height: 1.1; padding-left: .6rem; }
+.pill.off em { font-size: .75rem; font-weight: 400; }
+
+/* This week */
+.now {
+  margin-top: 1.25rem; display: grid; grid-template-columns: 1fr auto;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden;
+}
+.now-main { position: relative; padding: 1.2rem 1.5rem 1.35rem 1.8rem; background: var(--fill, var(--surface)); }
+.now-main::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 8px; background: var(--acc, var(--red)); }
+.now-main.off::before { display: none; }
+.now-label { font-weight: 500; color: var(--muted); }
+.now-label strong { color: var(--red); font-weight: 700; margin-right: .35rem; }
+.now-name { font-size: clamp(2.1rem, 8vw, 3.4rem); font-weight: 700; line-height: 1.05; letter-spacing: -.015em; margin-top: .25rem; }
+.now-main.off .now-name { color: var(--off-ink); }
+.now-note { margin-top: .3rem; color: var(--muted); }
+.now-next { padding: 1.2rem 1.5rem; border-left: 1px solid var(--rule); min-width: 15rem; display: flex; flex-direction: column; justify-content: center; gap: .45rem; }
+.now-next .lbl { color: var(--muted); font-weight: 500; }
+.now-next .pill { font-size: 1.1rem; }
+.now-next .when { color: var(--muted); font-size: .9rem; }
+
+/* Sections */
+section.block { margin-top: 2rem; }
+.block-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem 1rem; margin-bottom: .75rem; }
+h2 { font-size: 1.2rem; font-weight: 700; }
+.hint { color: var(--muted); font-size: .9rem; }
+
+/* Rotation order chips */
+.chips { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); list-style: none; margin: 0; padding: 0; }
+.chip { width: 100%; border: 0; font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
+.chip .n { color: var(--muted); font-weight: 500; margin-right: .45rem; font-variant-numeric: tabular-nums; }
+.chip[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--acc); }
+.me-next { margin-top: .75rem; font-weight: 500; }
+.me-next:empty { display: none; }
+.me-next b { font-weight: 700; }
+
+/* By date */
+.months { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
+.month { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: .65rem .75rem .75rem; }
+.month h3 { display: flex; justify-content: space-between; align-items: baseline; font-size: 1.05rem; font-weight: 700; padding-bottom: .45rem; margin-bottom: .35rem; border-bottom: 1px solid var(--rule); }
+.month h3 span { font-weight: 400; color: var(--muted); font-size: .95rem; }
+.month ol { list-style: none; margin: 0; padding: 0; }
+.row { display: grid; grid-template-columns: 2.3rem 1fr; align-items: center; gap: .35rem; margin-top: .35rem; transition: opacity .15s; }
+.d { display: flex; flex-direction: column; line-height: 1; }
+.d small { font-size: .7rem; color: var(--muted); }
+.d b { font-size: 1.15rem; font-weight: 700; margin-top: .1rem; font-variant-numeric: tabular-nums; }
+.row.is-off .d b { color: var(--off-ink); }
+.row.past { opacity: .42; }
+.row.current .pill { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--red); }
+.row.current .d b { color: var(--red); }
+
+/* By person */
+.people { display: grid; gap: .5rem; }
+.person {
+  display: grid; grid-template-columns: 12.5rem 1fr auto; align-items: center; gap: .75rem 1.25rem;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: .65rem .75rem;
+  transition: opacity .15s;
+}
+.person .pill { min-height: 2.4rem; }
+.person .pill .n { color: var(--muted); font-weight: 500; margin-right: .45rem; }
+.dates { display: grid; grid-template-columns: repeat(5, 1fr); gap: .5rem; list-style: none; margin: 0; padding: 0; }
+.dates li { padding-bottom: .2rem; border-bottom: 3px solid transparent; }
+.dates b { display: block; font-size: 1.05rem; font-weight: 700; white-space: nowrap; }
+.dates small { color: var(--muted); font-size: .75rem; }
+.dates li.past { opacity: .42; }
+.dates li.upcoming { border-bottom-color: var(--acc); }
+
+/* Highlighting one person */
+.hl .row:not(.sel) { opacity: .2; }
+.hl .person:not(.sel) { opacity: .35; }
+
+footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .9rem; display: grid; gap: .4rem; max-width: 70ch; }
+
+@media (max-width: 700px) {
+  .now { grid-template-columns: 1fr; }
+  .now-next { border-left: 0; border-top: 1px solid var(--rule); min-width: 0; padding: .9rem 1.5rem 1rem 1.8rem; }
+  .person { grid-template-columns: 1fr auto; grid-template-areas: "name btn" "dates dates"; }
+  .person .pill { grid-area: name; }
+  .person .btn { grid-area: btn; }
+  .person .dates { grid-area: dates; }
+  .dates { gap: .35rem; }
+  .dates b { font-size: .98rem; }
+}
+@media (max-width: 440px) {
+  .chips { grid-template-columns: 1fr 1fr; gap: .4rem; }
+  .chip, .person .pill { font-size: .875rem; padding-right: .4rem; }
+  .chip .n, .person .pill .n { margin-right: .3rem; }
+  .person .btn { padding: .55rem .65rem; }
+}
+@media (max-width: 380px) {
+  .person .btn .lbl-long { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .row, .person { transition: none; } }
+@media print {
+  body { background: #fff; }
+  .btn, .hint, .me-next { display: none !important; }
+  .month, .person, .now { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="title">
+      <h1>46 Refreshment Rota</h1>
+      <p class="sub" id="sub">Every Thursday, 3 December 2026 to 25 November 2027</p>
+    </div>
+    <a class="btn primary" id="dl-all" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M12 12v6M9 15h6"/></svg>
+      Add whole rota to calendar
+    </a>
+  </header>
+
+  <section class="now" id="now" aria-live="polite"></section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Rotation order</h2>
+      <p class="hint">Tap a name to highlight their weeks. Tap again to clear.</p>
+    </div>
+    <ul class="chips" id="chips"></ul>
+    <p class="me-next" id="me-next"></p>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>By date</h2>
+      <p class="hint">Faded weeks have passed.</p>
+    </div>
+    <div class="months" id="months"></div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>By person</h2>
+      <p class="hint">Each person has 5 turns. The coloured line marks your next one.</p>
+    </div>
+    <div class="people" id="people"></div>
+  </section>
+
+  <footer>
+    <p id="off-note"></p>
+    <p>Not-required weeks don&rsquo;t use a turn &ndash; the rotation carries on with the next person.</p>
+    <p>Calendar buttons download an .ics file. Open it to add the dates to your calendar. Personal calendars include a reminder at 9am the day before.</p>
+  </footer>
+</div>
+
+<script>
+/* ================= EDIT THE ROTA HERE ================= */
+const CONFIG = {
+  title: "46 Refreshment Rota",
+  start: "2026-12-03",          // first Thursday
+  weeks: 52,
+  people: [                     // rotation order
+    "Gowen, SH", "Dart, LE", "Prior, MA", "Cox, RI", "Hawkins, NI",
+    "Hunt, AN", "Leach, ST", "Martin, OL", "McDonald, JA", "Summerhayes, ST"
+  ],
+  notRequired: {                // these weeks don't use a turn
+    "2026-12-24": "Christmas Eve",
+    "2026-12-31": "New Year\u2019s Eve"
+  },
+  // Swaps: give a date and the name covering it. The rotation isn't shifted.
+  // e.g. "2027-03-04": "Cox, RI"
+  swaps: {}
+};
+/* ====================================================== */
+
+const DAY = 86400000;
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const MON3 = MONTHS.map(m => m.slice(0, 3));
+const WEEKDAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+const parse = s => { const [y, m, d] = s.split("-").map(Number); return Date.UTC(y, m - 1, d); };
+const iso = t => new Date(t).toISOString().slice(0, 10);
+const D = t => new Date(t);
+const longDate = (t, withYear) => `${WEEKDAYS[D(t).getUTCDay()]} ${D(t).getUTCDate()} ${MONTHS[D(t).getUTCMonth()]}${withYear ? " " + D(t).getUTCFullYear() : ""}`;
+const shortDate = t => `${D(t).getUTCDate()} ${MON3[D(t).getUTCMonth()]}`;
+const escHtml = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const slug = s => s.split(",")[0].trim().toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+/* Build the rota */
+const rota = [];
+{
+  let turn = 0;
+  const s = parse(CONFIG.start);
+  for (let i = 0; i < CONFIG.weeks; i++) {
+    const t = s + i * 7 * DAY, k = iso(t);
+    if (CONFIG.notRequired[k]) { rota.push({ t, k, p: null, note: CONFIG.notRequired[k] }); continue; }
+    let p = turn % CONFIG.people.length;
+    turn++;
+    const swap = CONFIG.swaps[k];
+    if (swap !== undefined) { const j = CONFIG.people.indexOf(swap); if (j >= 0) p = j; }
+    rota.push({ t, k, p });
+  }
+}
+const first = rota[0].t, last = rota[rota.length - 1].t;
+
+/* Today (add ?date=YYYY-MM-DD to the address to preview another day) */
+const q = new URLSearchParams(location.search).get("date");
+const nowD = new Date();
+const today = q && /^\d{4}-\d{2}-\d{2}$/.test(q) ? parse(q) : Date.UTC(nowD.getFullYear(), nowD.getMonth(), nowD.getDate());
+const curIdx = rota.findIndex(r => r.t >= today);
+const curYear = D(today).getUTCFullYear();
+
+document.getElementById("sub").textContent =
+  `Every Thursday, ${D(first).getUTCDate()} ${MONTHS[D(first).getUTCMonth()]} ${D(first).getUTCFullYear()} to ${D(last).getUTCDate()} ${MONTHS[D(last).getUTCMonth()]} ${D(last).getUTCFullYear()}`;
+
+/* This week */
+(function renderNow() {
+  const el = document.getElementById("now");
+  if (curIdx === -1) {
+    el.innerHTML = `<div class="now-main"><p class="now-label">Rota finished</p>
+      <p class="now-name">All done</p><p class="now-note">The last week was ${longDate(last, true)}.</p></div>`;
+    return;
+  }
+  const cur = rota[curIdx];
+  const days = Math.round((cur.t - today) / DAY);
+  const label = days === 0 ? "Tonight" : days <= 6 ? "This week" : curIdx === 0 ? "Rota starts" : "Next up";
+  const dateTxt = longDate(cur.t, D(cur.t).getUTCFullYear() !== curYear);
+
+  let main;
+  if (cur.p === null) {
+    main = `<div class="now-main off"><p class="now-label"><strong>${label}</strong>${dateTxt}</p>
+      <p class="now-name">Not required</p><p class="now-note">${escHtml(cur.note)}</p></div>`;
+  } else {
+    main = `<div class="now-main p${cur.p}"><p class="now-label"><strong>${label}</strong>${dateTxt}</p>
+      <p class="now-name">${escHtml(CONFIG.people[cur.p])}</p></div>`;
+  }
+
+  const nextIdx = rota.findIndex((r, i) => i > curIdx && r.p !== null);
+  let side = "";
+  if (nextIdx !== -1) {
+    const n = rota[nextIdx];
+    const gap = Math.round((n.t - cur.t) / DAY);
+    const lbl = cur.p === null ? "Next on" : gap === 7 ? "Next week" : "After that";
+    side = `<div class="now-next"><p class="lbl">${lbl}</p>
+      <p class="pill p${n.p}">${escHtml(CONFIG.people[n.p])}</p>
+      <p class="when">${longDate(n.t, D(n.t).getUTCFullYear() !== curYear)}</p></div>`;
+  }
+  el.innerHTML = main + side;
+})();
+
+/* Rotation order chips */
+const chipsEl = document.getElementById("chips");
+chipsEl.innerHTML = CONFIG.people.map((name, i) =>
+  `<li><button type="button" class="chip pill p${i}" data-p="${i}" aria-pressed="false"><span class="n">${i + 1}.</span>${escHtml(name)}</button></li>`
+).join("");
+
+/* By date */
+const monthsEl = document.getElementById("months");
+{
+  const groups = new Map();
+  rota.forEach((r, i) => {
+    const key = r.k.slice(0, 7);
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push({ ...r, i });
+  });
+  let html = "";
+  for (const [key, rows] of groups) {
+    const [y, m] = key.split("-").map(Number);
+    html += `<article class="month"><h3>${MONTHS[m - 1]}<span>${y}</span></h3><ol>`;
+    for (const r of rows) {
+      const cls = ["row"];
+      if (r.p === null) cls.push("is-off"); else cls.push("p" + r.p);
+      if (r.t < today) cls.push("past");
+      if (r.i === curIdx) cls.push("current");
+      const pill = r.p === null
+        ? `<span class="pill off">Not required<em>${escHtml(r.note)}</em></span>`
+        : `<span class="pill">${escHtml(CONFIG.people[r.p])}</span>`;
+      const aria = r.i === curIdx ? ' aria-current="date"' : "";
+      html += `<li class="${cls.join(" ")}" data-p="${r.p ?? ""}"${aria}><span class="d"><small>Thu</small><b>${D(r.t).getUTCDate()}</b></span>${pill}</li>`;
+    }
+    html += `</ol></article>`;
+  }
+  monthsEl.innerHTML = html;
+}
+
+/* Calendar files */
+const icsEsc = s => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+function makeIcs(calName, entries, withReminder) {
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const L = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//46 Refreshment Rota//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
+             "X-WR-CALNAME:" + icsEsc(calName)];
+  for (const r of entries) {
+    const start = r.k.replace(/-/g, ""), end = iso(r.t + DAY).replace(/-/g, "");
+    const who = r.p === null ? `Not required (${r.note})` : CONFIG.people[r.p];
+    L.push("BEGIN:VEVENT",
+      `UID:${start}-${withReminder ? "p" : "r"}@46-refreshment-rota`,
+      "DTSTAMP:" + stamp,
+      "DTSTART;VALUE=DATE:" + start,
+      "DTEND;VALUE=DATE:" + end,
+      "SUMMARY:" + icsEsc("46 Refreshments \u2013 " + who),
+      "TRANSP:TRANSPARENT");
+    if (withReminder) L.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsEsc("46 Refreshments tomorrow"), "TRIGGER:-PT15H", "END:VALARM");
+    L.push("END:VEVENT");
+  }
+  L.push("END:VCALENDAR");
+  return L.join("\r\n") + "\r\n";
+}
+function icsUrl(text) { return URL.createObjectURL(new Blob([text], { type: "text/calendar;charset=utf-8" })); }
+
+const dlAll = document.getElementById("dl-all");
+dlAll.href = icsUrl(makeIcs(CONFIG.title, rota, false));
+dlAll.download = "46-refreshment-rota.ics";
+
+/* By person */
+const peopleEl = document.getElementById("people");
+const calIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M12 12v6M9 15h6"/></svg>`;
+peopleEl.innerHTML = CONFIG.people.map((name, i) => {
+  const mine = rota.filter(r => r.p === i);
+  const upcoming = mine.findIndex(r => r.t >= today);
+  const dates = mine.map((r, j) => {
+    const cls = r.t < today ? "past" : j === upcoming ? "upcoming" : "";
+    return `<li class="${cls}"><b>${shortDate(r.t)}</b><small>Thu, ${D(r.t).getUTCFullYear()}</small></li>`;
+  }).join("");
+  const href = icsUrl(makeIcs(`46 Refreshments \u2013 ${name}`, mine, true));
+  return `<article class="person p${i}" data-p="${i}">
+    <span class="pill"><span class="n">${i + 1}.</span>${escHtml(name)}</span>
+    <ol class="dates">${dates}</ol>
+    <a class="btn" href="${href}" download="46-refreshments-${slug(name)}.ics" aria-label="Add ${escHtml(name)}'s dates to calendar">${calIcon}<span>Add<span class="lbl-long"> to calendar</span></span></a>
+  </article>`;
+}).join("");
+
+/* Footer note on not-required weeks */
+{
+  const offs = rota.filter(r => r.p === null);
+  document.getElementById("off-note").textContent = offs.length
+    ? "Not required: " + offs.map(r => `${shortDate(r.t)} ${D(r.t).getUTCFullYear()} (${r.note})`).join(", ") + "."
+    : "";
+}
+
+/* Highlight one person */
+const meNext = document.getElementById("me-next");
+function highlight(p) {
+  const on = p !== null && p !== "";
+  [monthsEl, peopleEl].forEach(el => el.classList.toggle("hl", on));
+  document.querySelectorAll(".row, .person").forEach(el => el.classList.toggle("sel", on && el.dataset.p === String(p)));
+  chipsEl.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", String(on && b.dataset.p === String(p))));
+  if (!on) { meNext.textContent = ""; return; }
+  const name = CONFIG.people[p];
+  const nxt = rota.find(r => r.p === Number(p) && r.t >= today);
+  meNext.innerHTML = nxt
+    ? `${escHtml(name)} is next on <b>${longDate(nxt.t, D(nxt.t).getUTCFullYear() !== curYear)}</b>.`
+    : `${escHtml(name)} has no more turns on this rota.`;
+  try { localStorage.setItem("rota46-me", String(p)); } catch (e) {}
+}
+chipsEl.addEventListener("click", e => {
+  const b = e.target.closest(".chip");
+  if (!b) return;
+  const already = b.getAttribute("aria-pressed") === "true";
+  if (already) { highlight(null); try { localStorage.removeItem("rota46-me"); } catch (e) {} }
+  else highlight(b.dataset.p);
+});
+try {
+  const saved = localStorage.getItem("rota46-me");
+  if (saved !== null && CONFIG.people[Number(saved)]) highlight(saved);
+} catch (e) {}
+</script>
+</body>
+</html>

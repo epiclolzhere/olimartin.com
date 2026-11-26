@@ -1,0 +1,23 @@
+{
+  "title": "46 Refreshment Rota",
+  "eventTitle": "46 Refreshments",
+  "start": "2026-12-03",
+  "weeks": 52,
+  "people": [
+    "Gowen, SH",
+    "Dart, LE",
+    "Prior, MA",
+    "Cox, RI",
+    "Hawkins, NI",
+    "Hunt, AN",
+    "Leach, ST",
+    "Martin, OL",
+    "McDonald, JA",
+    "Summerhayes, ST"
+  ],
+  "notRequired": {
+    "2026-12-24": "Christmas Eve",
+    "2026-12-31": "New Year’s Eve"
+  },
+  "swaps": {}
+}
